@@ -1,50 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { JobCard } from './JobCard';
-import type { Job } from '../types';
 
-const SAMPLE_JOBS: Job[] = [
-  {
-    id: '1',
-    title: 'Full Stack Developer for E-commerce Platform',
-    description: 'Looking for an experienced developer to build a modern e-commerce platform using React and Node.js.',
-    budget: 5000,
-    category: 'Web Development',
-    skills: ['React', 'Node.js', 'MongoDB', 'TypeScript'],
-    deadline: '2024-04-30',
-    clientId: 'client1',
-    status: 'open',
-    createdAt: '2024-03-15',
-  },
-  {
-    id: '2',
-    title: 'UI/UX Designer for Mobile App',
-    description: 'Need a talented designer to create beautiful and intuitive interfaces for our mobile application.',
-    budget: 3000,
-    category: 'Design',
-    skills: ['Figma', 'UI Design', 'Mobile Design', 'User Research'],
-    deadline: '2024-04-15',
-    clientId: 'client2',
-    status: 'open',
-    createdAt: '2024-03-14',
-  },
-  {
-    id: '3',
-    title: 'WordPress Developer for Blog Customization',
-    description: 'Seeking a WordPress expert to customize and optimize our blog with custom features and improved performance.',
-    budget: 1500,
-    category: 'WordPress',
-    skills: ['WordPress', 'PHP', 'CSS', 'JavaScript'],
-    deadline: '2024-04-10',
-    clientId: 'client3',
-    status: 'open',
-    createdAt: '2024-03-13',
-  },
-];
+interface Job {
+  id: string;
+  title: string;
+  description: string;
+  budgetRange: {
+    min: number;
+    max: number;
+  };
+  requiredLanguages: string[];
+  dueDate: string;
+  clientId: string;
+  status: string;
+  createdAt: string;
+}
 
 export function JobList() {
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/projects');
+        setJobs(response.data);
+      } catch (error) {
+        setError('Error fetching jobs. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-6">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-6 text-red-600">{error}</div>;
+  }
+
   return (
     <div className="space-y-6">
-      {SAMPLE_JOBS.map((job) => (
+      {jobs.map((job) => (
         <JobCard key={job.id} job={job} />
       ))}
     </div>
