@@ -7,6 +7,8 @@ import { Label } from "./ui/label";
 import { Alert, AlertDescription } from "./ui/alert";
 import { Loader2, Briefcase, Users } from "lucide-react";
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/authContext';
+
 
 interface SignupFormProps {
   onSuccess: () => void; // Callback to close the modal after successful signup
@@ -19,6 +21,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +44,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
 
       const data = await response.json();
       localStorage.setItem('token', data.token); // Save the token to localStorage
+      login(data.token);
       toast.success('Signup successful');
       onSuccess(); // Close the modal
       navigate('/'); // Redirect to the home page
