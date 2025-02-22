@@ -6,11 +6,16 @@ const ratingRoutes = require('./routes/ratingRoutes');
 const projectRoutes=require('./routes/projectRoutes');
 const freelancerRoutes=require('./routes/freelancerRoutes');
 const applicationRoutes=require('./routes/applicationRoutes');
-
+const cors = require("cors");
 require('dotenv').config();
 
 const app = express();
-
+app.use(cors({
+    origin: 'http://localhost:5173', // Allow only this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    credentials: true // Allow cookies and credentials
+}));
+  
 // Connect to MongoDB
 connectDB();
 
