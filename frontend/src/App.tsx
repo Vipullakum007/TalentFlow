@@ -1,9 +1,6 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Home } from './pages/Home';
-import { LoginForm } from './components/Loginform';
-import { SignupForm } from './components/SignupForm';
 import { ToastContainer } from "react-toastify";
 
 function App() {

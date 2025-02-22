@@ -7,6 +7,7 @@ import { Label } from "./ui/label";
 import { Alert, AlertDescription } from "./ui/alert";
 import { Loader2 } from "lucide-react";
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/authContext';
 
 interface LoginFormProps {
   onSuccess: () => void; // Callback to close the modal after successful login
@@ -18,6 +19,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,6 +44,8 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
       localStorage.setItem('token', data.token); // Save the token to localStorage
       onSuccess();
       console.log('Login successful', data);
+      login(data.token);
+      onSuccess(); 
       toast.success('Login successful');
       navigate('/');
     } catch (error) {

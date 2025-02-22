@@ -1,17 +1,22 @@
-// models/Project.js
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
-  jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true },
-  freelancerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Freelancer', required: true },
+  freelancerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Freelancer' },
   clientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Client', required: true },
-  milestones: [{ 
-    title: { type: String },
-    description: { type: String },
-    dueDate: { type: Date },
-    status: { type: String, enum: ['pending', 'completed'], default: 'pending' }
-  }],
-  status: { type: String, enum: ['active', 'completed'], default: 'active' },
+  
+  title: { type: String },
+  description: { type: String },
+  dueDate: { type: Date },
+  status: { type: String, enum: ['pending', 'completed'], default: 'pending' },
+  
+  budgetRange: {
+    min: { type: Number, required: true, min: 0, default: 0 },
+    max: { type: Number, required: true }
+  },
+  reviewStars: { type: Number, min: 0, max: 5, default: 0 },
+  requiredLanguages: [{ type: String }],
+  
+  isAssigned: { type: Boolean, default: false }, // New field
   createdAt: { type: Date, default: Date.now }
 });
 
