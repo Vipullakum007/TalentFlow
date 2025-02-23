@@ -42,12 +42,14 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
 
       const data = await response.json();
       localStorage.setItem('token', data.token); // Save the token to localStorage
+      onSuccess();
+      console.log('Login successful', data);
       login(data.token);
       onSuccess(); 
       toast.success('Login successful');
       navigate('/');
     } catch (error) {
-      toast.error(error instanceof Error? error.message : 'Login failed. Please try again.');
+      toast.error(error instanceof Error ? error.message : 'Login failed. Please try again.');
       setError(error instanceof Error ? error.message : 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);

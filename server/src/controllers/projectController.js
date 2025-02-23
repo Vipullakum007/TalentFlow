@@ -4,7 +4,7 @@ const Project = require('../models/Project');
 const createProject = async (req, res) => {
   try {
     const { clientId, title, description, dueDate, budgetRange, requiredLanguages } = req.body;
-
+    console.log("create job : ", req.body);
     const newProject = new Project({
       clientId,
       title,
@@ -24,9 +24,9 @@ const createProject = async (req, res) => {
 // Get all projects
 const getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find()
-      .populate('clientId', 'name email') // Populate client details
-      .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
+    const projects = await Project.find();
+    // .populate('clientId', 'name email') // Populate client details
+    // .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
     res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching projects', error: error.message });
@@ -125,12 +125,32 @@ const assignFreelancerToProject = async (req, res) => {
   }
 };
 
-  module.exports = {
-    createProject,
-    getAllProjects,
-    getProjectById,
-    updateProject,
-    deleteProject,
-    getProjectsByStatus,
-    assignFreelancerToProject,
-  };
+const getProjectsByClientId = async (req, res) => {
+  try {
+    const clientId = req.params.clientId;
+
+    // Find all projects where the clientId matches
+    const projects = await Project.find({ clientId })
+      .populate('clientId', 'name email') // Populate client details
+      .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
+
+    if (!projects || projects.length === 0) {
+      return res.status(404).json({ message: 'No projects found for this client.' });
+    }
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching projects by client ID', error: error.message });
+  }
+};
+
+module.exports = {
+  createProject,
+  getAllProjects,
+  getProjectById,
+  updateProject,
+  deleteProject,
+  getProjectsByStatus,
+  assignFreelancerToProject,
+  getProjectsByClientId
+};

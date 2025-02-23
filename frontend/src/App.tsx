@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Home } from './pages/Home';
+import { ClientProjects } from './components/ClientProjects'
 import { ToastContainer } from "react-toastify";
 
 function App() {
@@ -21,8 +22,8 @@ function App() {
         />
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} /> 
-
+          <Route path="/" element={<Home />} />
+          <Route path="/client-projects" element={<ClientProjects />} />
         </Routes>
       </div>
     </BrowserRouter>

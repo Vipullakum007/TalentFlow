@@ -30,9 +30,9 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/rate", ratingRoutes);
 
-app.use("/freelancer/", freelancerRoutes);
 
-app.use("/project/", projectRoutes);
+app.use("/freelancer/", freelancerRoutes);
+app.use('/api/project/',projectRoutes);
 
 app.use("/", applicationRoutes);
 const resumechecker = require("../src/ML-model/resume-checker");
