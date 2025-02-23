@@ -6,9 +6,17 @@ const {
   getAllFreelancers,
   getFreelancerById,
   deleteFreelancerById,
+  getFreelancerByUserId,
 } = require("../controllers/freelancerController");
 
 const router = express.Router();
+router.get("/", auth, getAllFreelancers);
+
+// Get freelancer by ID
+router.get("/:id", auth, getFreelancerById);
+router.get("/user/:userId", auth, getFreelancerByUserId);
+// Delete freelancer by ID
+router.delete("/:id", auth, deleteFreelancerById);
 
 // Update freelancer profile with image & resume upload
 router.put(
@@ -20,8 +28,5 @@ router.put(
   ]),
   updateFreelancerProfile
 );
-
-// Get all freelancers
-router.get("/getAll",auth, getAllFreelancers);
 
 module.exports = router;
