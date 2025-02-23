@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/authContext';
 import { PostJobForm } from '../components/PostJobForm';
@@ -36,6 +36,7 @@ export function ClientProjects() {
       return;
     }
     try {
+      console.log(`${import.meta.env.VITE_BACKEND_API}`);
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_API}api/project/client/${user?.id}`);
       console.log('Response:', response.data);
       setProjects(response.data);
