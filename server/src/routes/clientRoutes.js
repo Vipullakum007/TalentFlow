@@ -6,6 +6,7 @@ const {
   getClientById,
   deleteClientById,
   updateClientProfile,
+  getClientByUserId
 } = require("../controllers/clientController");
 
 const router = express.Router();
@@ -21,5 +22,7 @@ router.delete("/:id", auth, deleteClientById);
 
 // Update client profile (with optional image upload)
 router.put("/:id", auth, upload.single("profileImage"), updateClientProfile);
+
+router.get("/user/:userId", auth, getClientByUserId);
 
 module.exports = router;

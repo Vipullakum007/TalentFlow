@@ -1,5 +1,7 @@
 const Project = require('../models/Project');
-const Freelancer=require('../models/Freelancer');
+const Freelancer = require('../models/Freelancer');
+const Client = require('../models/Client');
+const { default: mongoose } = require('mongoose');
 // Create a new project
 const createProject = async (req, res) => {
   try {
@@ -16,8 +18,15 @@ const createProject = async (req, res) => {
       isAssigned,
       category
     });
+    // const client = await Client.findOne({ _id: new mongoose.Types.ObjectId(clientId) });
+    // if (!client) {
+    //   return res.status(400).json({ message: 'Invalid client ID' });
+    // }
 
     const savedProject = await newProject.save();
+    // client.jobsPosted.push(savedProject);
+    // updatedClient = await client.save();
+    // console.log("updated client : ", updatedClient);
     res.status(201).json(savedProject);
   } catch (error) {
     console.error(error);

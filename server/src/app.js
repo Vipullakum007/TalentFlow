@@ -8,6 +8,7 @@ const applicationRoutes = require("./routes/applicationRoutes");
 const axios = require("axios"); // ✅ Import axios
 const categoryRoutes = require("./routes/categoryRoutes");
 const cors = require("cors");
+const userRoutes = require("./routes/userRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -40,8 +41,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/rate", ratingRoutes);
-app.use("/freelancer", freelancerRoutes);
+app.use("/api/freelancer", freelancerRoutes);
 app.use("/api/project", projectRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/", applicationRoutes);

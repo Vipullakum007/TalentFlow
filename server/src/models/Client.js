@@ -6,7 +6,7 @@ const clientSchema = new mongoose.Schema({
   ProfileImage: { type: String },
   companyName: { type: String },
   industry: { type: String },
-  jobsPosted: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
+  jobsPosted: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
   createdAt: { type: Date, default: Date.now },
 });
 

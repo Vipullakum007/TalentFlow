@@ -4,6 +4,7 @@ import { Home } from './pages/Home';
 import { ClientProjects } from './components/ClientProjects';
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from './context/authContext';
+import { Profile } from './components/Profile';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/client-projects" element={<ClientProjects />} />
+            <Route path="/profile/:userId" element={<Profile />} />
           </Routes>
         </div>
       </BrowserRouter>
