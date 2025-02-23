@@ -1,6 +1,5 @@
 import { JobCard } from './JobCard';
 import { Job } from '../types/Job';
-import { ShowerHead } from 'lucide-react';
 
 interface JobListProps {
   jobs: Job[];
