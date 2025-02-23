@@ -17,7 +17,7 @@ export function Home() {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/project');
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_API}api/project`);
       setJobs(response.data);
       setFilteredJobs(response.data);
     } catch (error) {
@@ -28,7 +28,7 @@ export function Home() {
   const handleJobSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post('http://localhost:3000/api/project/add', data);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_API}api/project/add`, data);
       toast.success('Job posted successfully!');
       setShowPostJobForm(false);
       console.log("Response  : ", response);

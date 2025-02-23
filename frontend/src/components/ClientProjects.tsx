@@ -36,7 +36,7 @@ export function ClientProjects() {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3000/api/project/client/${user?.id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_API}api/project/client/${user?.id}`);
       console.log('Response:', response.data);
       setProjects(response.data);
     } catch (error) {
@@ -47,7 +47,7 @@ export function ClientProjects() {
 
   const handleUpdate = async (projectId: string, updatedData: Partial<Project>) => {
     try {
-      await axios.put(`http://localhost:3000/api/project/${projectId}`, updatedData);
+      await axios.put(`${import.meta.env.VITE_BACKEND_API}api/project/${projectId}`, updatedData);
       toast.success('Project updated successfully!');
       fetchProjects(); // Refresh the project list
       setSelectedProject(null); // Clear the selected project

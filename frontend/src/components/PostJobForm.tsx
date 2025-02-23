@@ -45,7 +45,7 @@ export function PostJobForm({ initialData, onSubmit, onCancel }: PostJobFormProp
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get<Category[]>('http://localhost:3000/api/categories');
+        const response = await axios.get<Category[]>(`${import.meta.env.VITE_BACKEND_API}api/categories`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
