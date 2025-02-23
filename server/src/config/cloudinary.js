@@ -10,16 +10,27 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Set up storage for Multer
-const storage = new CloudinaryStorage({
+// Multer Storage for Profile Images
+const profileStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "freelancer_profiles", // Folder in Cloudinary
+    folder: "freelancer_profiles",
     allowed_formats: ["jpg", "jpeg", "png"],
   },
 });
 
-// Initialize multer with Cloudinary storage
-const upload = multer({ storage });
+// Multer Storage for PDFs (Resume)
+const resumeStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "freelancer_resumes",
+    resource_type: "raw", // Required for non-image files like PDFs
+    allowed_formats: ["pdf"],
+  },
+});
 
-module.exports = { upload };  // ✅ Ensure upload is correctly exported
+// Initialize Multer with both storage options
+const upload = multer({ storage: profileStorage });
+const resumeUpload = multer({ storage: resumeStorage });
+
+module.exports = { upload, resumeUpload };

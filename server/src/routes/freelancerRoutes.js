@@ -10,20 +10,14 @@ const {
 
 const router = express.Router();
 
-// Get all freelancers
-router.get("/", auth, getAllFreelancers);
-
-// Get freelancer by ID
-router.get("/:id", auth, getFreelancerById);
-
-// Delete freelancer by ID
-router.delete("/:id", auth, deleteFreelancerById);
-
-// Update freelancer profile with image upload
+// Update freelancer profile with image & resume upload
 router.put(
   "/:id",
   auth,
-  upload.single("profileImage"),
+  upload.fields([
+    { name: "profileImage", maxCount: 1 },
+    { name: "portfolio", maxCount: 1 },
+  ]),
   updateFreelancerProfile
 );
 
