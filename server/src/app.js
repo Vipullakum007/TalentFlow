@@ -14,11 +14,12 @@ require("dotenv").config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://talent-flow-neon.vercel.app/", "https://talentflow.onrender.com"], // Allow only this origin
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
-    credentials: true, // Allow cookies and credentials
+    origin: "*", // Allow all origins (for debugging, later restrict this)
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 
 // Connect to MongoDB
 connectDB();
