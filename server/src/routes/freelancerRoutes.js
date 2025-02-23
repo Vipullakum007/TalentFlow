@@ -21,4 +21,7 @@ router.put(
   updateFreelancerProfile
 );
 
+// Get all freelancers
+router.get("/getAll",auth, getAllFreelancers);
+
 module.exports = router;
