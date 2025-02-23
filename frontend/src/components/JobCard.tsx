@@ -23,7 +23,7 @@ export function JobCard({ job, showApplyButton = false }: JobCardProps) {
   useEffect(() => {
     if (user && token) {
       axios
-        .get(`http://localhost:3000/api/project/${job._id}/check-application?freelancerId=${user.id}`, {
+        .get(`${import.meta.env.VITE_BACKEND_API}api/project/${job._id}/check-application?freelancerId=${user.id}`, {
           headers: { Authorization: `Bearer ${token}` }, // Include JWT token
         })
         .then((response) => {
