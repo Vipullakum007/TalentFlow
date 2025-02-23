@@ -38,7 +38,7 @@ export const ApplyNowForm: React.FC<ApplyNowFormProps> = ({
     try {
       // Create application record first
       const applicationResponse = await axios.post(
-        'http://localhost:3000/projects/createapplication',
+        `${import.meta.env.VITE_BACKEND_API}projects/createapplication`,
         {
           projectId,
           freelancerId: user.id,
@@ -57,7 +57,7 @@ export const ApplyNowForm: React.FC<ApplyNowFormProps> = ({
   
       // Assign freelancer to the project
       await axios.patch(
-        `http://localhost:3000/api/project/${projectId}/assign-freelancer`,
+        `${import.meta.env.VITE_BACKEND_API}api/project/${projectId}/assign-freelancer`,
         {
           freelancerId: user.id,
         },

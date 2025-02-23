@@ -4,7 +4,7 @@ const Project = require('../models/Project');
 const createApplication = async (req, res) => {
   try {
     const { projectId, freelancerId, proposedBudget } = req.body;
-
+    // console.log("Application",req.body);
     // Check if the project is already assigned
     const project = await Project.findById(projectId);
     if (project.isAssigned) {
@@ -23,6 +23,7 @@ const createApplication = async (req, res) => {
     const savedApplication = await newApplication.save();
     res.status(201).json(savedApplication);
   } catch (error) {
+    // console.log(error);
     res.status(500).json({ message: 'Error creating application', error: error.message });
   }
 };

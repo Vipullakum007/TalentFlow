@@ -116,7 +116,7 @@ function LandingPage() {
             </p>
             <div className="mt-10 flex items-center gap-x-6">
               <Link
-                to="/"
+                to="/login"
                 className="rounded-md bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               >
                 Get Started
@@ -182,7 +182,15 @@ function LandingPage() {
 }
 
 export function Home() {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   if (!isAuthenticated) {
     return <LandingPage />;

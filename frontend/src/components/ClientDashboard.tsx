@@ -120,7 +120,7 @@ export function ClientDashboard() {
 
   const handlePostJob = async (newJob: Job) => {
     try {
-      await axios.post('http://localhost:3000/api/project/add', { ...newJob, clientId: user?.id });
+      await axios.post(`${import.meta.env.VITE_BACKEND_API}api/project/add`, { ...newJob, clientId: user?.id });
       setShowPostJobForm(false);
       setJobs([...jobs, newJob]);
       setFilteredJobs([...jobs, newJob]);
