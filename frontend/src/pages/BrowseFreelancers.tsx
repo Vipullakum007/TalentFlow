@@ -20,7 +20,7 @@ export function BrowseFreelancers() {
     const fetchFreelancers = async () => {
       try {
         const token = localStorage.getItem("token"); // Assuming JWT authentication
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_API}freelancer`, {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_API}api/freelancer`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log(response.data);
