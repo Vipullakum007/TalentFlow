@@ -1,9 +1,9 @@
 const Project = require('../models/Project');
-
+const Freelancer=require('../models/Freelancer');
 // Create a new project
 const createProject = async (req, res) => {
   try {
-    const { clientId, title, description, dueDate, budgetRange, requiredLanguages } = req.body;
+    const { clientId, title, description, dueDate, budgetRange, requiredLanguages, status, isAssigned, category } = req.body;
     console.log("create job : ", req.body);
     const newProject = new Project({
       clientId,
@@ -12,11 +12,15 @@ const createProject = async (req, res) => {
       dueDate,
       budgetRange,
       requiredLanguages,
+      status,
+      isAssigned,
+      category
     });
 
     const savedProject = await newProject.save();
     res.status(201).json(savedProject);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Error creating project', error: error.message });
   }
 };
@@ -24,7 +28,7 @@ const createProject = async (req, res) => {
 // Get all projects
 const getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().populate('category', 'name');
     // .populate('clientId', 'name email') // Populate client details
     // .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
     res.status(200).json(projects);
@@ -130,9 +134,9 @@ const getProjectsByClientId = async (req, res) => {
     const clientId = req.params.clientId;
 
     // Find all projects where the clientId matches
-    const projects = await Project.find({ clientId })
-      .populate('clientId', 'name email') // Populate client details
-      .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
+    const projects = await Project.find({ clientId });
+    // .populate('clientId', 'name email') // Populate client details
+    // .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
 
     if (!projects || projects.length === 0) {
       return res.status(404).json({ message: 'No projects found for this client.' });
@@ -162,6 +166,50 @@ const checkApplication = async (req, res) => {
   }
 }
 
+const recommendProjects = async (req, res) => {
+  try {
+    const userId = req.user.id; // This is the userId from the token
+    console.log('User ID from token:', userId);
+
+    // Find the freelancer document using the userId
+    const freelancer = await Freelancer.findOne({ userId });
+
+    if (!freelancer) {
+      return res.status(404).json({ message: 'Freelancer not found' });
+    }
+
+    const freelancerId = freelancer._id; // This is the freelancerId
+    console.log('Freelancer ID:', freelancerId);
+
+    // Fetch all projects
+    const projects = await Project.find({ isAssigned: false }); // Only unassigned projects
+
+    // Filter and rank projects based on freelancer's skills and experience
+    const recommendedProjects = projects
+      .map(project => {
+        // Calculate a score for each project based on matching skills and budget
+        const skillMatch = project.requiredLanguages.filter(language =>
+          freelancer.skills.includes(language)
+        ).length;
+
+        const budgetScore = project.budgetRange.max; // Higher budget projects get higher priority
+        const dueDateScore = -new Date(project.dueDate).getTime(); // Sooner due dates get higher priority
+        const experienceScore = freelancer.completedJobs; // More experienced freelancers get challenging projects
+
+        // Total score (you can adjust the weights as needed)
+        const totalScore = skillMatch * 0.5 + budgetScore * 0.3 + dueDateScore * 0.1 + experienceScore * 0.1;
+
+        return { ...project.toObject(), score: totalScore };
+      })
+      .sort((a, b) => b.score - a.score); // Sort by score in descending order
+
+    res.status(200).json(recommendedProjects);
+  } catch (error) {
+    console.error('Error recommending projects:', error);
+    res.status(500).json({ message: 'Error fetching recommendations', error: error.message });
+  }
+};
+
 module.exports = {
   createProject,
   getAllProjects,
@@ -171,5 +219,6 @@ module.exports = {
   getProjectsByStatus,
   assignFreelancerToProject,
   getProjectsByClientId,
-  checkApplication
+  checkApplication,
+  recommendProjects
 };

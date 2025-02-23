@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Bell, Menu, Search } from 'lucide-react';
 import { Modal } from './Modal';
 import { LoginForm } from './Loginform';
@@ -34,9 +34,16 @@ export function Header() {
               <Link to="/freelancers" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
                 Browse Freelancers
               </Link>
-              <Link to="/client-projects" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
-                My Projects
-              </Link>
+              {token ?
+                (
+                  <Link to="/client-projects" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                    My Projects
+                  </Link>
+                ) :
+                (<>
+                </>)
+              }
+
             </nav>
           </div>
           <div className="flex items-center">

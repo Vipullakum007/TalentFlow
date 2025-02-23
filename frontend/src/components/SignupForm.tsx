@@ -29,7 +29,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/signup', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API}api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

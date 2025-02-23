@@ -2,17 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 import { ApplyNowForm } from "./ApplyNowForm";
+import { Job } from '../types/Job';
 
-interface Job {
-  _id: string;
-  title: string;
-  description: string;
-  budgetRange: { min: number; max: number };
-  requiredLanguages: string[];
-  dueDate: string;
-  clientId: string;
-  status: string;
-}
 
 interface JobCardProps {
   job: Job;

@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const projectController = require('../controllers/projectController');
-
+const auth=require('../middleware/auth');
 // Create a new project
 router.post('/add', projectController.createProject);
 
 // Get all projects
 router.get('/', projectController.getAllProjects);
 
+router.get('/fun/recomend',auth,projectController.recommendProjects);
 // Get a single project by ID
 router.get('/:id', projectController.getProjectById);
 
@@ -27,5 +28,6 @@ router.get('/client/:clientId', projectController.getProjectsByClientId);
 
 // ✅ Check if freelancer has already applied
 router.get("/:projectId/check-application", projectController.checkApplication);
+
 
 module.exports = router;
