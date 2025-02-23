@@ -3,7 +3,7 @@ import axios from 'axios';
 import { JobCard } from './JobCard';
 
 interface Job {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   budgetRange: {
@@ -25,7 +25,8 @@ export function JobList() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/projects');
+        const response = await axios.get('http://localhost:3000/api/project/');
+        console.log(response.data);
         setJobs(response.data);
       } catch (error) {
         setError('Error fetching jobs. Please try again later.');
@@ -48,7 +49,7 @@ export function JobList() {
   return (
     <div className="space-y-6">
       {jobs.map((job) => (
-        <JobCard key={job.id} job={job} />
+        <JobCard key={job._id} job={job} />
       ))}
     </div>
   );

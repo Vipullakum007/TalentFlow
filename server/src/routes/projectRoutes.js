@@ -3,7 +3,7 @@ const router = express.Router();
 const projectController = require('../controllers/projectController');
 
 // Create a new project
-router.post('/', projectController.createProject);
+router.post('/add', projectController.createProject);
 
 // Get all projects
 router.get('/', projectController.getAllProjects);
@@ -23,4 +23,5 @@ router.get('/status/:status', projectController.getProjectsByStatus);
 // Assign a freelancer to a project
 router.patch('/:id/assign-freelancer', projectController.assignFreelancerToProject);
 
+router.get('/client/:clientId', projectController.getProjectsByClientId);
 module.exports = router;

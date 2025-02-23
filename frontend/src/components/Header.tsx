@@ -4,17 +4,19 @@ import { Modal } from './Modal';
 import { LoginForm } from './Loginform';
 import { SignupForm } from './SignupForm';
 import { useAuth } from '../context/authContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const token = localStorage.getItem('token'); // Check if the user is logged in
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove the token
     logout();
-    window.location.reload(); // Refresh the page to update the UI
+    navigate('/');
   };
 
   return (
@@ -26,15 +28,15 @@ export function Header() {
               <h1 className="text-xl font-bold text-indigo-600">TalentFlow</h1>
             </div>
             <nav className="hidden md:ml-6 md:flex md:space-x-8">
-              <a href="#" className="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+              <Link to="/" className="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
                 Find Work
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+              </Link>
+              <Link to="/freelancers" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
                 Browse Freelancers
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
-                Post a Job
-              </a>
+              </Link>
+              <Link to="/client-projects" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                My Projects
+              </Link>
             </nav>
           </div>
           <div className="flex items-center">
