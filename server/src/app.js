@@ -14,7 +14,7 @@ require("dotenv").config();
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow only this origin
+    origin: ["http://localhost:5173", "https://talent-flow-neon.vercel.app/"], // Allow only this origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     credentials: true, // Allow cookies and credentials
   })
@@ -32,7 +32,7 @@ app.use("/api/rate", ratingRoutes);
 
 
 app.use("/freelancer/", freelancerRoutes);
-app.use('/api/project/',projectRoutes);
+app.use('/api/project/', projectRoutes);
 app.use('/api/categories', categoryRoutes);
 
 app.use("/", applicationRoutes);
