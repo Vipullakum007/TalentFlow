@@ -21,7 +21,7 @@ export function FreelancerDashboard() {
       }
 
       try {
-        const response = await axios.get<Job[]>(`${import.meta.env.VITE_BACKEND_API}api/project/`, {
+        const response = await axios.get<Job[]>(`${import.meta.env.VITE_BACKEND_API}api/project/fun/recomend`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setJobs(response.data);
