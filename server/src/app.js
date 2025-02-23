@@ -7,7 +7,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const freelancerRoutes = require("./routes/freelancerRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const axios = require("axios"); // ✅ Import axios
-
+const categoryRoutes = require("./routes/categoryRoutes");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -33,6 +33,7 @@ app.use("/api/rate", ratingRoutes);
 
 app.use("/freelancer/", freelancerRoutes);
 app.use('/api/project/',projectRoutes);
+app.use('/api/categories', categoryRoutes);
 
 app.use("/", applicationRoutes);
 const resumechecker = require("../src/ML-model/resume-checker");

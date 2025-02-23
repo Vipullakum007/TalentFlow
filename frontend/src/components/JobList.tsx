@@ -1,49 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { JobCard } from './JobCard';
+import { Job } from '../types/Job';
 
-interface Job {
-  _id: string;
-  title: string;
-  description: string;
-  budgetRange: {
-    min: number;
-    max: number;
-  };
-  requiredLanguages: string[];
-  dueDate: string;
-  clientId: string;
-  status: string;
-  createdAt: string;
+interface JobListProps {
+  jobs: Job[];
 }
 
-export function JobList() {
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/project/');
-        console.log(response.data);
-        setJobs(response.data);
-      } catch (error) {
-        setError('Error fetching jobs. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchJobs();
-  }, []);
-
-  if (loading) {
-    return <div className="text-center py-6">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center py-6 text-red-600">{error}</div>;
+export function JobList({ jobs }: JobListProps) {
+  if (jobs.length === 0) {
+    return <div className="text-center py-6">No jobs available.</div>;
   }
 
   return (

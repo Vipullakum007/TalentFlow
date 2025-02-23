@@ -81,6 +81,7 @@ export function ProjectDetails({ project }: ProjectDetailsProps) {
                     <h3 className="text-lg font-semibold text-gray-800">Review Stars</h3>
                     <p className="text-gray-700">{project.reviewStars} / 5</p>
                 </div>
+
             </div>
         </div>
     );
