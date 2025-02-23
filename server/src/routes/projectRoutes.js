@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const projectController = require('../controllers/projectController');
-
+const auth=require('../middleware/auth');
 // Create a new project
 router.post('/add', projectController.createProject);
 
 // Get all projects
 router.get('/', projectController.getAllProjects);
 
+router.get('/fun/recomend',auth,projectController.recommendProjects);
 // Get a single project by ID
 router.get('/:id', projectController.getProjectById);
 
@@ -24,4 +25,5 @@ router.get('/status/:status', projectController.getProjectsByStatus);
 router.patch('/:id/assign-freelancer', projectController.assignFreelancerToProject);
 
 router.get('/client/:clientId', projectController.getProjectsByClientId);
+
 module.exports = router;
