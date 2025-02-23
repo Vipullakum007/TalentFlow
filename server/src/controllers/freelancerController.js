@@ -3,7 +3,7 @@ const Freelancer = require("../models/Freelancer");
 // Get all freelancers
 const getAllFreelancers = async (req, res) => {
   try {
-    const freelancers = await Freelancer.find();
+    const freelancers = await Freelancer.find().populate("userId", "email");;
     res.status(200).json(freelancers);
   } catch (err) {
     res.status(500).json({ message: err.message });
