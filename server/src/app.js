@@ -28,7 +28,7 @@ app.use('/api/rate', ratingRoutes);
 
 app.use('/freelancer/',freelancerRoutes);
 
-app.use('/project/',projectRoutes);
+app.use('/api/project/',projectRoutes);
 
 app.use('/', applicationRoutes);
 
