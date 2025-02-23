@@ -17,6 +17,7 @@ const projectSchema = new mongoose.Schema({
   requiredLanguages: [{ type: String }],
 
   isAssigned: { type: Boolean, default: false }, // New field
+  applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Freelancer" }], // ✅ Stores freelancer IDs who applied
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true }, // Category field
   createdAt: { type: Date, default: Date.now }
 });

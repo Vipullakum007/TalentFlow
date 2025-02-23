@@ -148,6 +148,24 @@ const getProjectsByClientId = async (req, res) => {
   }
 };
 
+// check freelancer already appiled to job or not
+const checkApplication = async (req, res) => {
+  try {
+    const { freelancerId } = req.query;
+    const project = await Project.findById(req.params.projectId);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const hasApplied = project.applicants?.includes(freelancerId);
+    res.json({ applied: hasApplied || false });
+  } catch (error) {
+    console.error("Error checking application:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 const recommendProjects = async (req, res) => {
   try {
     const userId = req.user.id; // This is the userId from the token
@@ -201,5 +219,6 @@ module.exports = {
   getProjectsByStatus,
   assignFreelancerToProject,
   getProjectsByClientId,
+  checkApplication,
   recommendProjects
 };

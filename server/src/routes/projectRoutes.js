@@ -26,4 +26,8 @@ router.patch('/:id/assign-freelancer', projectController.assignFreelancerToProje
 
 router.get('/client/:clientId', projectController.getProjectsByClientId);
 
+// ✅ Check if freelancer has already applied
+router.get("/:projectId/check-application", projectController.checkApplication);
+
+
 module.exports = router;

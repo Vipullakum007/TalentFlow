@@ -9,4 +9,6 @@ router.patch('/applications/:applicationId/accept',auth, applicationController.a
 
 router.post('/projects/createapplication',auth,applicationController.createApplication);
 
+router.get('/projects/available', auth, applicationController.getAvailableJobsForFreelancer);
+
 module.exports = router;
