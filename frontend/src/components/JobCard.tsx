@@ -1,19 +1,5 @@
 import React from 'react';
-
-interface Job {
-  id: string;
-  title: string;
-  description: string;
-  budgetRange: {
-    min: number;
-    max: number;
-  };
-  requiredLanguages: string[];
-  dueDate: string;
-  clientId: string;
-  status: string;
-  createdAt: string;
-}
+import { Job } from '../types/Job';
 
 interface JobCardProps {
   job: Job;

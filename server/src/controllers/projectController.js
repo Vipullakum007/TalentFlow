@@ -3,7 +3,7 @@ const Freelancer=require('../models/Freelancer');
 // Create a new project
 const createProject = async (req, res) => {
   try {
-    const { clientId, title, description, dueDate, budgetRange, requiredLanguages } = req.body;
+    const { clientId, title, description, dueDate, budgetRange, requiredLanguages, status, isAssigned, category } = req.body;
     console.log("create job : ", req.body);
     const newProject = new Project({
       clientId,
@@ -12,11 +12,15 @@ const createProject = async (req, res) => {
       dueDate,
       budgetRange,
       requiredLanguages,
+      status,
+      isAssigned,
+      category
     });
 
     const savedProject = await newProject.save();
     res.status(201).json(savedProject);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Error creating project', error: error.message });
   }
 };
@@ -24,7 +28,7 @@ const createProject = async (req, res) => {
 // Get all projects
 const getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().populate('category', 'name');
     // .populate('clientId', 'name email') // Populate client details
     // .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
     res.status(200).json(projects);
@@ -130,9 +134,9 @@ const getProjectsByClientId = async (req, res) => {
     const clientId = req.params.clientId;
 
     // Find all projects where the clientId matches
-    const projects = await Project.find({ clientId })
-      .populate('clientId', 'name email') // Populate client details
-      .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
+    const projects = await Project.find({ clientId });
+    // .populate('clientId', 'name email') // Populate client details
+    // .populate('freelancerId', 'name skills'); // Populate freelancer details if assigned
 
     if (!projects || projects.length === 0) {
       return res.status(404).json({ message: 'No projects found for this client.' });
