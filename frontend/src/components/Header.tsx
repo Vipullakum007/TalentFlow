@@ -25,7 +25,7 @@ export function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-indigo-600">TalentFlow</h1>
+              <h1 className="text-xl font-bold text-indigo-600 cursor-pointer" onClick={() => { navigate('/') }}>TalentFlow</h1>
             </div>
             <nav className="hidden md:ml-6 md:flex md:space-x-8">
               <Link to="/" className="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
